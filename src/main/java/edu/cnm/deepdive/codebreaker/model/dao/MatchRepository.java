@@ -27,7 +27,10 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
   Stream<Match> findAllByParticipantsNotContainsAndEndingAfterOrderByEndingAsc(
       User participant, Date cutoff);
 
-  Stream<Match> findAllByParticipantsNotContainsAndEndingAfterAndCodeLengthOrderByEndingAsc(
-      User participant, Date cutoff, int codeLength);
+  Stream<Match>
+  findAllByParticipantsNotContainsAndEndingAfterAndCodeLengthAndPoolSizeOrderByEndingAsc(
+      User participant, Date cutoff, int codeLength, int poolSize);
+
+  // etc.
 
 }
