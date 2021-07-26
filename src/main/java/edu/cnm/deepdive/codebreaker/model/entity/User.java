@@ -56,6 +56,11 @@ public class User {
   @Column(nullable = false)
   private boolean inactive;
 
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false, updatable = true)
+  @NonNull
+  private Date connected;
+
   @OneToMany(mappedBy = "originator", fetch = FetchType.LAZY,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @OrderBy("created DESC")
@@ -115,9 +120,19 @@ public class User {
   }
 
   @NonNull
+  public Date getConnected() {
+    return connected;
+  }
+
+  public void setConnected(@NonNull Date connected) {
+    this.connected = connected;
+  }
+
+  @NonNull
   public List<Match> getMatchesOriginated() {
     return matchesOriginated;
   }
+
 
   @NonNull
   public List<Match> getMatchesParticipating() {
