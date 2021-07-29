@@ -40,8 +40,23 @@ public class CodeService {
     return repository.save(code);
   }
 
-  public Optional<Code> get(UUID id) {
-    return repository.findById(id);
+  public Optional<Code> get(UUID id, User user) {
+    return repository
+        .findById(id)
+        .map((code) -> (code.getMatch() != null || code.getUser().getId().equals(user.getId()))
+            ? code
+            : null
+        );
+  }
+
+  public void delete(UUID id, User user) {
+    repository
+        .findById(id)
+        .map((code) -> (code.getMatch() == null && code.getUser().getId().equals(user.getId()))
+            ? code
+            : null
+        )
+        .ifPresent(repository::delete);
   }
 
   public Stream<Code> getUserCodes(User user) {
@@ -50,6 +65,10 @@ public class CodeService {
 
   public Stream<Code> getUserSolvedCodes(User user) {
     return repository.findAllByUserAndSolvedOrderByCreatedDesc(user);
+  }
+
+  public Stream<Code> getUserNotSolvedCodes(User user) {
+    return repository.findAllByUserAndNotSolvedOrderByCreatedAsc(user);
   }
 
 }

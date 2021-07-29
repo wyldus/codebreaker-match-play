@@ -18,7 +18,7 @@ public interface CodeRepository extends JpaRepository<Code, UUID> {
 
   @Query("SELECT c FROM Code AS c WHERE c.user = :user AND NOT EXISTS("
       + "    SELECT g FROM Guess AS g WHERE g.code = c AND g.exactMatches = c.length"
-      + ") ORDER BY c.created DESC")
-  Stream<Code> findAllByUserAndNotSolvedOrderByCreatedDesc(User user);
+      + ") ORDER BY c.created ASC")
+  Stream<Code> findAllByUserAndNotSolvedOrderByCreatedAsc(User user);
 
 }

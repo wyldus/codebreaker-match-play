@@ -5,6 +5,7 @@ import edu.cnm.deepdive.codebreaker.model.entity.User;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -23,10 +24,9 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
     this.repository = repository;
   }
 
-  public User get(UUID id) {
+  public Optional<User> get(UUID id) {
     return repository
-        .findById(id)
-        .orElseThrow();
+        .findById(id);
   }
 
   public User save(User user) {
