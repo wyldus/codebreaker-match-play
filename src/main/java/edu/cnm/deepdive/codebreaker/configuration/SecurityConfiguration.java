@@ -59,6 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         new DelegatingOAuth2TokenValidator<>(audienceValidator, issuerValidator);
     decoder.setJwtValidator(combinedValidator);
     return decoder;
-
   }
+
 }
